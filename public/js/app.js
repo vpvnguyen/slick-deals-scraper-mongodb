@@ -22,17 +22,21 @@ function validateSearchQuery(searchQuery) {
 function postSearchQuery(one) {
     // var slickDealsSearchUrl = `https://slickdeals.net/newsearch.php?src=SearchBarV2&q=${searchQuery}&searcharea=deals&searchin=first`
 
-    console.log(one)
-    // POST /search with search query
-    axios.post('/search', {
-        searchQuery: one
-    })
-        .then(function (response) {
-            console.log(`slickDealsSearch Response: ${response}`)
-        })
-        .catch(function (err) {
-            console.log(`slickDealsSearch Error: ${err}`)
-        });
+    console.log(typeof one)
+
+    // send a POST request
+    // axios.post(url[, data[, config]])
+    axios({
+        method: 'post',
+        url: '/search',
+        data: {
+            searchQuery: one
+        }
+    }).then(function (response) {
+        console.log(response);
+    }, function (error) {
+        console.log(error);
+    });
 
 
 };
