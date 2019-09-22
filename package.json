@@ -1,0 +1,28 @@
+{
+  "name": "slick-deals-scraper-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpvnguyen/slick-deals-scraper-mongodb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpvnguyen/slick-deals-scraper-mongodb/issues"
+  },
+  "homepage": "https://github.com/vpvnguyen/slick-deals-scraper-mongodb#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.1",
+    "morgan": "^1.9.1",
+    "rotating-file-stream": "^1.4.3"
+  }
+}
