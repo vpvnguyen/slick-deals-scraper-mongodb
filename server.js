@@ -45,16 +45,38 @@ app.post('/search', (req, res) => {
 
     // First, we grab the body of the html with axios
     axios.get(slickDealsSearchQuery).then(function (response) {
-
         // Then, we load that into cheerio and save it to $ for a shorthand selector
-        const $ = cheerio.load(response.data);
+        var $ = cheerio.load(response.data);
 
-        let list = [];
+        var dealInfoArray = [];
 
-        $('div.resultRow').each(function (i, element) {
-            list.push(element)
-            console.log(list)
+        $('.dealWrapper a.dealTitle').each(function (i, element) {
+            var slickDealsUrl = 'https://slickdeals.net';
+            var dealInfo = {};
+            console.log('======= element =======')
+            // console.log(this)
+            console.log(element.attribs.href)
+            console.log(element.attribs.title)
+            dealInfo.title = element.attribs.title;
+            dealInfo.href = slickDealsUrl + element.attribs.href;
+            dealInfoArray.push(dealInfo)
         });
+        console.log(dealInfoArray)
+
+        //   // Create a new Article using the `result` object built from scraping
+        //   db.Article.create(result)
+        //     .then(function (dbArticle) {
+        //       // View the added result in the console
+        //       console.log(dbArticle);
+        //     })
+        //     .catch(function (err) {
+        //       // If an error occurred, log it
+        //       console.log(err);
+        //     });
+        // });
+
+        // Send a message to the client
+        res.send("Scrape Complete");
     });
 });
 
