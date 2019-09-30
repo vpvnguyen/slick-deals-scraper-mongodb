@@ -35,6 +35,12 @@ $(document).ready(function () {
         console.log(`saving item: ${unsaveItem}`);
         unsave(unsaveItem);
     });
+
+    $(document).on('click', '#clear-button', function (event) {
+        event.preventDefault();
+        $('.progress').show();
+        clearDB();
+    });
 });
 
 // check if search is empty or is only a number
@@ -90,3 +96,17 @@ function unsave(removeItem) {
         if (err) throw err;
     })
 };
+
+function clearDB() {
+    M.toast({ html: `Clearing out unsaved...` });
+
+    axios({
+        method: 'delete',
+        url: `/delete/`
+    }).then(function (response) {
+        location.reload();
+    }).catch(function (err) {
+        if (err) throw err;
+    })
+
+}
