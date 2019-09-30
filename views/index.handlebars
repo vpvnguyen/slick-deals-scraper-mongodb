@@ -26,51 +26,55 @@
 
 {{!-- tabs --}}
 <!-- collapsible elements -->
-<ul id="tabs-swipe" class="tabs">
-    <li class="tab col s6"><a class="active" href="#results-swipe">Results</a></li>
-    <li class="tab col s6"><a href="#saved-swipe">Saved</a></li>
-</ul>
-<div id="results-swipe" class="col s12">
-    {{#each dbDeals}}
-    {{#unless this.isSaved}}
-    <div id="item-group-${index}" class="row mt-4">
-        <div id="detail-group-${index}" class="col">
-            <p>{{this.title}}</p>
-            <p>{{this.link}}</p>
-            <p>{{this.price}}</p>
-            <p>{{this.store}}</p>
-            <p>{{this.rating}}</p>
-            {{!-- <p id="title-${index}">{{isSaved}}</p> --}}
-            <a href="{{this.link}}" target="_blank" class="secondary-content"><i class="material-icons">link</i></a>
-            <a id="{{this._id}}" class="secondary-content saveItem" data-save-item="{{this._id}}"><i
-                    class="material-icons">save</i></a>
-            <hr class="m-4">
-        </div>
+<div class="container">
+    <ul id="tabs-swipe" class="tabs">
+        <li class="tab col s6"><a href="#results-swipe">Results</a></li>
+        <li class="tab col s6"><a href="#saved-swipe">Saved</a></li>
+    </ul>
+    <div class="progress">
+        <div class="indeterminate"></div>
     </div>
-    {{/unless}}
-    {{/each}}
+    <div id="results-swipe" class="col s12">
+        {{#each dbDeals}}
+        {{#unless this.isSaved}}
+        <div class="row mt-4">
+            <div class="col">
+                <a href="{{this.link}}">{{this.title}}</a>
+                <p>Price: {{this.price}}</p>
+                <p>Seller: {{this.store}}</p>
+                <p>Popularity: {{this.rating}}</p>
 
-</div>
-<div id="saved-swipe" class="col s12">
-    {{#each dbDeals}}
-    {{#if this.isSaved}}
-    <div id="item-group-${index}" class="row mt-4">
-        <div id="detail-group-${index}" class="col">
-            <p>{{this.title}}</p>
-            <p>{{this.link}}</p>
-            <p>{{this.price}}</p>
-            <p>{{this.store}}</p>
-            <p>{{this.rating}}</p>
-            {{!-- <p id="title-${index}">{{isSaved}}</p> --}}
-            <a href="{{this.link}}" target="_blank" class="secondary-content"><i class="material-icons">link</i></a>
-            <a id="{{this._id}}" class="secondary-content removeItem" data-save-item="{{this._id}}"><i
-                    class="material-icons">save</i></a>
-            <hr class="m-4">
+                <a id="{{this._id}}" class="secondary-content saveItem" data-save-item="{{this._id}}"><i
+                        class="medium material-icons lightseagreen-text tooltipped" data-position="top"
+                        data-tooltip="Save">save</i></a>
+            </div>
         </div>
+        <hr class="m-4">
+        {{/unless}}
+        {{/each}}
+
     </div>
-    {{/if}}
-    {{/each}}
+    <div id="saved-swipe" class="col s12">
+        {{#each dbDeals}}
+        {{#if this.isSaved}}
+        <div id="item-group-${index}" class="row mt-4">
+            <div id="detail-group-${index}" class="col">
+                <a href="{{this.link}}">{{this.title}}</a>
+                <p>Price: {{this.price}}</p>
+                <p>Seller: {{this.store}}</p>
+                <p>Popularity: {{this.rating}}</p>
+
+                <a id="{{this._id}}" class="secondary-content removeItem" data-save-item="{{this._id}}"><i
+                        class="medium material-icons lightseagreen-text tooltipped" data-position="top"
+                        data-tooltip="Delete">delete</i></a>
+            </div>
+        </div>
+        <hr class="m-4">
+        {{/if}}
+        {{/each}}
+    </div>
 </div>
+
 
 <!--  Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
@@ -79,3 +83,4 @@
 <script src="js/materialize.init.js"></script>
 <script src="./js/app.js"></script>
 <script src="./js/tabs.materialize.js"></script>
+<script src="./js/tooltip.materialize.js"></script>
