@@ -1,42 +1,75 @@
 $(document).ready(function () {
-    $(document).on('click', '#search-button', function () {
+    $(document).on('click', '#search-button', function (event) {
+        event.preventDefault();
+
         console.log('compare!');
-        const searchQuery = $('#search-input').val().trim();
-        console.log(`searchQuery: ${searchQuery}`);
-        validateSearchQuery(searchQuery);
-    })
+        const searchInput = $('#search-input').val().trim();
+
+        console.log(`searchQuery: ${searchInput}`);
+        validateSearchQuery(searchInput);
+    });
+
+    $(document).on('click', '.saveItem', function (event) {
+        event.preventDefault();
+
+        console.log('save!');
+        const saveItem = $(this).data('save-item');
+        console.log(`saving item: ${saveItem}`);
+        save(saveItem);
+    });
+
+    $(document).on('click', '#saved-swipe', function (event) {
+        event.preventDefault();
+    });
+
+    $(document).on('click', '.removeItem', function (event) {
+        event.preventDefault();
+
+        console.log('save!');
+        const unsaveItem = $(this).data('save-item');
+        console.log(`saving item: ${unsaveItem}`);
+        unsave(unsaveItem);
+    });
 });
 
 // check if search is empty or is only a number
-function validateSearchQuery(searchQuery) {
-    if (searchQuery === '' || !isNaN(searchQuery)) {
+function validateSearchQuery(searchInput) {
+    if (searchInput === '' || !isNaN(searchInput)) {
         console.log('cannot be an empty string or a number!');
-        $('#message').text('Cannot be an empty string or a number!')
+        return $('#results-swipe').text('Cannot be an empty string or a number!');
     } else {
-        $('#message').text(`Searching for ${searchQuery}`);
-        postSearchQuery(searchQuery);
+        $('#results-swipe').text(`Searching for ${searchInput}`);
+        postSearchQuery(searchInput);
     }
 };
 
 // send search query to /search
-function postSearchQuery(one) {
-    // var slickDealsSearchUrl = `https://slickdeals.net/newsearch.php?src=SearchBarV2&q=${searchQuery}&searcharea=deals&searchin=first`
-
-    console.log(typeof one)
-
-    // send a POST request
-    // axios.post(url[, data[, config]])
+function postSearchQuery(validatedSearch) {
     axios({
         method: 'post',
         url: '/search',
         data: {
-            searchQuery: one
+            searchQuery: validatedSearch
         }
-    }).then(function (response) {
-        console.log(response);
-    }, function (error) {
-        console.log(error);
-    });
+    }).catch(function (err) {
+        if (err) throw err;
+    })
+};
 
+function save(saveItem) {
+    axios({
+        method: 'put',
+        url: `/save/${saveItem}`
+    }).catch(function (err) {
+        if (err) throw err;
+    })
+};
 
+function unsave(removeItem) {
+    axios({
+        method: 'put',
+        url: `/remove/${removeItem}`
+    }).catch(function (err) {
+        if (err) throw err;
+    })
 };
