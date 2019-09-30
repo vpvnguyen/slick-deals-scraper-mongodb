@@ -9,6 +9,7 @@
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
 	font-size: inherit;
 }
@@ -32,6 +33,7 @@ a, body, textarea, .font-white {
 body {
   background-color: #2F4F4F;
 }
+
 .help-header {
   font-weight: bold;
 }
