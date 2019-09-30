@@ -1,16 +1,18 @@
+$('.progress').hide();
+
 $(document).ready(function () {
     $(document).on('click', '#search-button', function (event) {
         event.preventDefault();
+        $('.progress').show();
 
-        console.log('compare!');
         const searchInput = $('#search-input').val().trim();
-
         console.log(`searchQuery: ${searchInput}`);
         validateSearchQuery(searchInput);
     });
 
     $(document).on('click', '.saveItem', function (event) {
         event.preventDefault();
+        $('.progress').show();
 
         console.log('save!');
         const saveItem = $(this).data('save-item');
@@ -20,10 +22,13 @@ $(document).ready(function () {
 
     $(document).on('click', '#saved-swipe', function (event) {
         event.preventDefault();
+        $('.progress').show();
     });
 
     $(document).on('click', '.removeItem', function (event) {
         event.preventDefault();
+        $('.progress').show();
+
 
         console.log('save!');
         const unsaveItem = $(this).data('save-item');
@@ -35,16 +40,18 @@ $(document).ready(function () {
 // check if search is empty or is only a number
 function validateSearchQuery(searchInput) {
     if (searchInput === '' || !isNaN(searchInput)) {
-        console.log('cannot be an empty string or a number!');
+        $('.progress').hide();
+        M.toast({ html: 'Cannot be an empty string or a number!' });
         return $('#results-swipe').text('Cannot be an empty string or a number!');
     } else {
-        $('#results-swipe').text(`Searching for ${searchInput}`);
         postSearchQuery(searchInput);
     }
 };
 
 // send search query to /search
 function postSearchQuery(validatedSearch) {
+    M.toast({ html: `Searching for deals on ${validatedSearch}` });
+
     axios({
         method: 'post',
         url: '/search',
@@ -59,6 +66,8 @@ function postSearchQuery(validatedSearch) {
 };
 
 function save(saveItem) {
+    M.toast({ html: `Saving ${saveItem}...` });
+
     axios({
         method: 'put',
         url: `/save/${saveItem}`
@@ -70,6 +79,8 @@ function save(saveItem) {
 };
 
 function unsave(removeItem) {
+    M.toast({ html: `Removing ${removeItem}...` });
+
     axios({
         method: 'put',
         url: `/remove/${removeItem}`
