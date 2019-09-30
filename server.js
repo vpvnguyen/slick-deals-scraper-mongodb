@@ -64,39 +64,37 @@ app.post('/search', (req, res) => {
     const slickDealsSearchQuery = `https://slickdeals.net/newsearch.php?src=SearchBarV2&q=${searchQuery}&searcharea=deals&searchin=first`;
 
     // grab the body of the html with axios
-    axios.get(slickDealsSearchQuery).then(function (webscrapeResponse) {
-        const $ = cheerio.load(webscrapeResponse.data);
+    axios
+        .get(slickDealsSearchQuery)
+        .then(function (webscrapeResponse) {
+            const $ = cheerio.load(webscrapeResponse.data);
 
-        $('.resultRow').each(function (i, element) {
-            const result = {};
-            let slickDealsUrl = 'https://slickdeals.net';
-            result.title = $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('title');
-            result.link = slickDealsUrl + $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('href');
-            result.price = $(this).children('div.priceCol').children('span.price').text().trim();
-            result.store = $(this).children('div.priceCol').children('span.store').text().trim();
-            result.rating = $(this).children('div.ratingCol').children('div.ratingNum').text().trim();
+            $('.resultRow').each(function (i, element) {
+                const result = {};
+                let slickDealsUrl = 'https://slickdeals.net';
+                result.title = $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('title');
+                result.link = slickDealsUrl + $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('href');
+                result.price = $(this).children('div.priceCol').children('span.price').text().trim();
+                result.store = $(this).children('div.priceCol').children('span.store').text().trim();
+                result.rating = $(this).children('div.ratingCol').children('div.ratingNum').text().trim();
 
-            db.Deals.create(result)
-                .then(function (dbDeals) {
-                    console.log('------');
-                    console.log(dbDeals);
+                db.Deals.create(result)
+                    .then(function (dbDeals) {
 
-                })
-                .catch(function (err) {
-                    console.log(err);
-                });
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            });
 
-        });
-
-        res.render('index');
-
-    });
+            res.send({ redirect: '/' });
+        }).catch(err => { throw err });
 });
 
 app.put('/save/:id', (req, res) => {
     db.Deals.findOneAndUpdate({ _id: req.params.id }, { isSaved: true })
         .then(data => {
-            res.render('index');
+            res.send({ redirect: '/' });
         })
         .catch(err => {
             res.json(err);
@@ -107,7 +105,7 @@ app.put('/remove/:id', (req, res) => {
     console.log(req.params.id)
     db.Deals.findOneAndUpdate({ _id: req.params.id }, { isSaved: false })
         .then(data => {
-            res.render('index');
+            res.send({ redirect: '/' });
         })
         .catch(err => {
             res.json(err);
