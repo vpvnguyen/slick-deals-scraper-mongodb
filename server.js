@@ -15,21 +15,19 @@ const app = express();
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/webscrapeDeals';
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// npm morgan; create log directory
+// npm morgan; sync or create log directory
 const logDirectory = path.join(__dirname, 'log');
-// ensure log directory exists
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
-// create a rotating write stream
+// create a rotating write stream; save logs
 const accessLogStream = rfs('access.log', {
     interval: '1d', // rotate daily
     path: logDirectory
 });
 
-// setup the logger
+// server-side logging
 app.use(morgan('combined', { stream: accessLogStream }));
 
-// MIDDLEWARE
 // handle url encoded data; parse json
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
