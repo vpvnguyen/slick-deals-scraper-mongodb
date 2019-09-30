@@ -19,23 +19,53 @@
 
         {{!-- buttons --}}
         <div class="row center">
-            <a id="search-button" class="btn-large waves-effect waves-light white-text">Search Deals! <i
-                    class="material-icons right">send</i>
+            <a id="search-button" class="btn-large waves-effect waves-light white-text tooltipped" data-position="right"
+                data-tooltip="Feeling Lucky?">Search Deals! <i class="material-icons right">send</i>
             </a>
         </div>
         <div class="row center">
-            <a id="clear-button" class="btn-small waves-effect waves-light white-text">Clear Results <i
+            <a id="clear-button" class="btn-small waves-effect waves-light white-text mb-4 tooltipped"
+                data-position="right" data-tooltip="Clear Unsaved Results">Clear Results <i
                     class="material-icons right">delete_forever</i>
             </a>
         </div>
+
+
+        {{!-- tap target --}}
+        <div class="row">
+            <a id="help-menu" class="waves-effect waves-light btn btn-floating"
+                onclick="$('.tap-target').tapTarget('open')"><i class="material-icons">help_outline</i></a>
+
+            <!-- Tap Target Structure -->
+            <div class="tap-target cyan" data-target="help-menu">
+                <div class="tap-target-content">
+                    <h5 class="help-header mb-3">Need some help?</h5>
+                    <ul class="help-text mb-4">
+                        <li class="pb-1">
+                            - Type an item to search
+                        </li>
+                        <li class="pb-1">
+                            - Search results will persist
+                        </li>
+                        <li class="pb-1">
+                            - Clearing the results will not affect your saved ones!
+                        </li>
+                    </ul>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
 {{!-- tabs --}}
 <div class="container">
-    <ul id="tabs-swipe" class="tabs tabs-fixed-width">
-        <li class="tab col s6"><a href="#results-swipe">Results</a></li>
-        <li class="tab col s6"><a href="#saved-swipe">Saved</a></li>
+    <ul id="tabs-swipe" class="tabs tabs-fixed-width mt-5">
+        <li class="tab col s6"><a href="#results-swipe" class="tooltipped" data-position="top"
+                data-tooltip="All Search Results! Save The Best Deal!">Results</a></li>
+        <li class="tab col s6"><a href="#saved-swipe" class="tooltipped" data-position="top"
+                data-tooltip="Your Saved Deals!">Saved</a></li>
     </ul>
     <div class="progress">
         <div class="indeterminate"></div>
