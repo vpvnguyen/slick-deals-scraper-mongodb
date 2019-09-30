@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
+// create schema to store all webscrape deals
 const Schema = mongoose.Schema;
-
 const DealsSchema = new Schema({
 
     title: {
@@ -40,6 +40,7 @@ const DealsSchema = new Schema({
     }
 });
 
-const Deals = mongoose.model("Deals", DealsSchema);
+// set Deals collection and export model
+const Deals = mongoose.model('Deals', DealsSchema);
 
 module.exports = Deals;
