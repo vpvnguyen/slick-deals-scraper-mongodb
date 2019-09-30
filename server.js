@@ -80,7 +80,7 @@ app.post('/search', (req, res) => {
 
                 db.Deals.create(result)
                     .then(function (dbDeals) {
-
+                        console.log(dbDeals);
                     })
                     .catch(function (err) {
                         console.log(err);
