@@ -1,4 +1,5 @@
 const express = require('express');
+const handlebars = require('express-handlebars');
 const router = express.Router();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -7,13 +8,15 @@ const fs = require('fs');
 const rfs = require('rotating-file-stream');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const db = require('./models');
 
 const PORT = process.env.PORT || 3000;
 
-
 const app = express();
 
-mongoose.connect("mongodb://localhost/easterDealsDB", { useNewUrlParser: true });
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/webscrapeDeals";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // npm morgan; create log directory
 const logDirectory = path.join(__dirname, 'log');
@@ -37,51 +40,79 @@ app.use(express.json());
 // make public static
 app.use(express.static('public'));
 
+// handlebars
+app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
+app.get('/', (req, res) => {
+    db.Deals.find({}).then(function (dbDeals) {
+        console.log('FIND ALL DEALS ======')
+        console.log(dbDeals)
+        let hbsObject;
+        hbsObject = {
+            dbDeals
+        };
+        res.render('index', hbsObject);
+    }).catch(function (err) {
+        if (err) throw err;
+    })
+});
+
 app.post('/search', (req, res) => {
+
     const searchQuery = req.body.searchQuery;
     const slickDealsSearchQuery = `https://slickdeals.net/newsearch.php?src=SearchBarV2&q=${searchQuery}&searcharea=deals&searchin=first`;
-    console.log('====== controller | /search =======');
-    console.log(slickDealsSearchQuery);
 
-    // First, we grab the body of the html with axios
-    axios.get(slickDealsSearchQuery).then(function (response) {
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var $ = cheerio.load(response.data);
+    // grab the body of the html with axios
+    axios.get(slickDealsSearchQuery).then(function (webscrapeResponse) {
+        const $ = cheerio.load(webscrapeResponse.data);
 
-        var dealInfoArray = [];
+        $('.resultRow').each(function (i, element) {
+            const result = {};
+            let slickDealsUrl = 'https://slickdeals.net';
+            result.title = $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('title');
+            result.link = slickDealsUrl + $(this).children('div.mainDealInfo').children('div.dealWrapper').children('a.dealTitle').attr('href');
+            result.price = $(this).children('div.priceCol').children('span.price').text().trim();
+            result.store = $(this).children('div.priceCol').children('span.store').text().trim();
+            result.rating = $(this).children('div.ratingCol').children('div.ratingNum').text().trim();
 
-        $('.dealWrapper a.dealTitle').each(function (i, element) {
-            var slickDealsUrl = 'https://slickdeals.net';
-            var dealInfo = {};
-            console.log('======= element =======')
-            // console.log(this)
-            console.log(element.attribs.href)
-            console.log(element.attribs.title)
-            dealInfo.title = element.attribs.title;
-            dealInfo.href = slickDealsUrl + element.attribs.href;
-            dealInfoArray.push(dealInfo)
+            db.Deals.create(result)
+                .then(function (dbDeals) {
+                    console.log('------');
+                    console.log(dbDeals);
+
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+
         });
-        console.log(dealInfoArray)
 
-        //   // Create a new Article using the `result` object built from scraping
-        //   db.Article.create(result)
-        //     .then(function (dbArticle) {
-        //       // View the added result in the console
-        //       console.log(dbArticle);
-        //     })
-        //     .catch(function (err) {
-        //       // If an error occurred, log it
-        //       console.log(err);
-        //     });
-        // });
+        res.render('index');
 
-        // Send a message to the client
-        res.send("Scrape Complete");
     });
 });
 
-// start server and listen for client requests
-app.listen(PORT, function () {
-    // log (server-side) when server has started
-    console.log(`Server listening on: http://localhost:${PORT}`);
+app.put('/save/:id', (req, res) => {
+    db.Deals.findOneAndUpdate({ _id: req.params.id }, { isSaved: true })
+        .then(data => {
+            res.render('index');
+        })
+        .catch(err => {
+            res.json(err);
+        });;
 });
+
+app.put('/remove/:id', (req, res) => {
+    console.log(req.params.id)
+    db.Deals.findOneAndUpdate({ _id: req.params.id }, { isSaved: false })
+        .then(data => {
+            res.render('index');
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+// start server and listen for client requests
+app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));
