@@ -34,6 +34,9 @@ $(document).ready(function () {
         $('.progress').show();
         clearDB();
     });
+
+    $('.tap-target').tapTarget();
+    $('.tap-target').tapTarget('open')
 });
 
 // check if search is empty or is only a number
