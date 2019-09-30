@@ -1,9 +1,10 @@
+{{!-- search --}}
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
         <h1 class="header center lightseagreen-text">New Deals</h1>
         <div class="row center">
-            <h5 class="header col s12 light">Find and save from Slick Deals!</h5>
+            <h5 class="header col s12 white-text light ">Find and save your favorite Slick Deals!</h5>
         </div>
         <div class="row">
             <form class="col s12">
@@ -15,6 +16,8 @@
                 </div>
             </form>
         </div>
+
+        {{!-- buttons --}}
         <div class="row center">
             <a id="search-button" class="btn-large waves-effect waves-light white-text">Search Deals! <i
                     class="material-icons right">send</i>
@@ -25,14 +28,10 @@
                     class="material-icons right">delete_forever</i>
             </a>
         </div>
-        <br><br>
-        <br><br>
-
     </div>
 </div>
 
 {{!-- tabs --}}
-<!-- collapsible elements -->
 <div class="container">
     <ul id="tabs-swipe" class="tabs tabs-fixed-width">
         <li class="tab col s6"><a href="#results-swipe">Results</a></li>
@@ -46,8 +45,8 @@
         {{#unless this.isSaved}}
         <div class="row mt-4">
             <div class="col">
-                <a href="{{this.link}}">{{this.title}}</a>
-                <p>Price: {{this.price}}</p>
+                <a href="{{this.link}}" class="mb-3">{{this.title}}</a>
+                <p class="mt-4">Price: {{this.price}}</p>
                 <p>Seller: {{this.store}}</p>
                 <p>Popularity: {{this.rating}}</p>
 
@@ -56,7 +55,7 @@
                         data-tooltip="Save">save</i></a>
             </div>
         </div>
-        <hr class="m-4">
+        <hr class="m-4 line">
         {{/unless}}
         {{/each}}
 
@@ -66,8 +65,8 @@
         {{#if this.isSaved}}
         <div id="item-group-${index}" class="row mt-4">
             <div id="detail-group-${index}" class="col">
-                <a href="{{this.link}}">{{this.title}}</a>
-                <p>Price: {{this.price}}</p>
+                <a href="{{this.link}}" class="mb-3">{{this.title}}</a>
+                <p class="mt-4">Price: {{this.price}}</p>
                 <p>Seller: {{this.store}}</p>
                 <p>Popularity: {{this.rating}}</p>
 
@@ -76,7 +75,7 @@
                         data-tooltip="Delete">delete</i></a>
             </div>
         </div>
-        <hr class="m-4">
+        <hr class="m-4 line">
         {{/if}}
         {{/each}}
     </div>
