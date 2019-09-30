@@ -33,8 +33,9 @@
 
         {{!-- tap target --}}
         <div class="row">
-            <a id="help-menu" class="waves-effect waves-light btn btn-floating"
-                onclick="$('.tap-target').tapTarget('open')"><i class="material-icons">help_outline</i></a>
+            <a id="help-menu" class="waves-effect waves-light btn btn-floating tooltipped" data-position="right"
+                data-tooltip="Need some help?" onclick="$('.tap-target').tapTarget('open')"><i
+                    class="material-icons">help_outline</i></a>
 
             <!-- Tap Target Structure -->
             <div class="tap-target cyan" data-target="help-menu">
@@ -49,6 +50,9 @@
                         </li>
                         <li class="pb-1">
                             - Clearing the results will not affect your saved ones!
+                        </li>
+                        <li class="pb-1">
+                            - Happy hunting!
                         </li>
                     </ul>
                     <br><br>
