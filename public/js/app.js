@@ -35,8 +35,8 @@ $(document).ready(function () {
         clearDB();
     });
 
+    // init tap menu
     $('.tap-target').tapTarget();
-    $('.tap-target').tapTarget('open')
 });
 
 // check if search is empty or is only a number
