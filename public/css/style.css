@@ -21,10 +21,14 @@
   color: lightseagreen;
 }
 
-.font-white {
+a, body, textarea, .font-white {
   color: white;
 }
 
+.line {
+  background-color: white;
+}
+
 body {
-  background-color: #DCDCDC;
+  background-color: #2F4F4F;
 }

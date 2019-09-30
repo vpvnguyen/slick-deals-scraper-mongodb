@@ -1,41 +1,34 @@
+// hide progress loading bar on load
 $('.progress').hide();
 
+// init all buttons
 $(document).ready(function () {
+
+    // search for item
     $(document).on('click', '#search-button', function (event) {
         event.preventDefault();
         $('.progress').show();
-
         const searchInput = $('#search-input').val().trim();
-        console.log(`searchQuery: ${searchInput}`);
         validateSearchQuery(searchInput);
     });
 
+    // save item to favorites
     $(document).on('click', '.saveItem', function (event) {
         event.preventDefault();
         $('.progress').show();
-
-        console.log('save!');
         const saveItem = $(this).data('save-item');
-        console.log(`saving item: ${saveItem}`);
         save(saveItem);
     });
 
-    $(document).on('click', '#saved-swipe', function (event) {
-        event.preventDefault();
-        $('.progress').show();
-    });
-
+    // unsave an item
     $(document).on('click', '.removeItem', function (event) {
         event.preventDefault();
         $('.progress').show();
-
-
-        console.log('save!');
         const unsaveItem = $(this).data('save-item');
-        console.log(`saving item: ${unsaveItem}`);
         unsave(unsaveItem);
     });
 
+    // clear out all unsaved items from db
     $(document).on('click', '#clear-button', function (event) {
         event.preventDefault();
         $('.progress').show();
@@ -68,9 +61,10 @@ function postSearchQuery(validatedSearch) {
         location.reload();
     }).catch(function (err) {
         if (err) throw err;
-    })
+    });
 };
 
+// save item to favorites
 function save(saveItem) {
     M.toast({ html: `Saving ${saveItem}...` });
 
@@ -81,9 +75,10 @@ function save(saveItem) {
         location.reload();
     }).catch(function (err) {
         if (err) throw err;
-    })
+    });
 };
 
+// remove item from favorites
 function unsave(removeItem) {
     M.toast({ html: `Removing ${removeItem}...` });
 
@@ -94,9 +89,10 @@ function unsave(removeItem) {
         location.reload();
     }).catch(function (err) {
         if (err) throw err;
-    })
+    });
 };
 
+// delete all unsaved items
 function clearDB() {
     M.toast({ html: `Clearing out unsaved...` });
 
@@ -107,6 +103,5 @@ function clearDB() {
         location.reload();
     }).catch(function (err) {
         if (err) throw err;
-    })
-
-}
+    });
+};
