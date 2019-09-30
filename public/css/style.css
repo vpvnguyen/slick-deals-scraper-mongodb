@@ -32,3 +32,10 @@ a, body, textarea, .font-white {
 body {
   background-color: #2F4F4F;
 }
+.help-header {
+  font-weight: bold;
+}
+
+.help-text {
+  font-size: 16px;
+}
