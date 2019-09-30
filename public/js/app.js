@@ -51,6 +51,8 @@ function postSearchQuery(validatedSearch) {
         data: {
             searchQuery: validatedSearch
         }
+    }).then(function (response) {
+        location.reload();
     }).catch(function (err) {
         if (err) throw err;
     })
@@ -60,6 +62,8 @@ function save(saveItem) {
     axios({
         method: 'put',
         url: `/save/${saveItem}`
+    }).then(function (response) {
+        location.reload();
     }).catch(function (err) {
         if (err) throw err;
     })
@@ -69,6 +73,8 @@ function unsave(removeItem) {
     axios({
         method: 'put',
         url: `/remove/${removeItem}`
+    }).then(function (response) {
+        location.reload();
     }).catch(function (err) {
         if (err) throw err;
     })
