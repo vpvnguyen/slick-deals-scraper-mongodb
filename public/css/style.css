@@ -12,3 +12,15 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+.page-footer {
+  background-color: lightseagreen;
+}
+
+.lightseagreen-text {
+  color: lightseagreen;
+}
+
+.font-white {
+  color: white;
+}
