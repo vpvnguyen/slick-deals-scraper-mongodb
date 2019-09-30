@@ -112,5 +112,16 @@ app.put('/remove/:id', (req, res) => {
         });
 });
 
+app.delete('/delete', (req, res) => {
+    console.log(req.params.id)
+
+    db.Deals.deleteMany({ isSaved: false })
+        .then(function (deleteDeals) {
+            res.send({ redirect: '/' });
+        }).catch(function (err) {
+            if (err) throw err;
+        })
+});
+
 // start server and listen for client requests
 app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));
