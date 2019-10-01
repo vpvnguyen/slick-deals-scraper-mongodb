@@ -12,7 +12,7 @@
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="search-input" class="materialize-textarea"></textarea>
+                        <textarea id="search-input" class="materialize-textarea textarea"></textarea>
                         <label for="search-input">Search item</label>
                     </div>
                 </div>
@@ -77,13 +77,14 @@
 <div class="container">
     <ul id="tabs-swipe" class="tabs tabs-fixed-width mt-5">
         <li class="tab col s6">
-            <a href="#results-swipe" class="tooltipped" data-position="top"
+            <a href="#results-swipe" class=".perfect-grey-color tooltipped" data-position="top"
                 data-tooltip="All Search Results! Save The Best Deal!">
                 Results
             </a>
         </li>
         <li class="tab col s6">
-            <a href="#saved-swipe" class="tooltipped" data-position="top" data-tooltip="Your Saved Deals!">
+            <a href="#saved-swipe" class=".perfect-grey-color tooltipped" data-position="top"
+                data-tooltip="Your Saved Deals!">
                 Saved
             </a>
         </li>
@@ -106,13 +107,13 @@
                 <p>Popularity: {{this.rating}}</p>
 
                 <a id="{{this._id}}" class="secondary-content saveItem" data-save-item="{{this._id}}">
-                    <i class="medium material-icons lightseagreen-text tooltipped" data-position="top"
+                    <i class="small material-icons darkseagreen-color z-depth-1 tooltipped" data-position="top"
                         data-tooltip="Save">
                         save
                     </i>
                 </a>
 
-                <a class="waves-effect waves-light btn modal-trigger addNote" href="#note-modal-{{this._id}}"
+                <a class="waves-effect waves-light btn-small modal-trigger addNote" href="#note-modal-{{this._id}}"
                     data-save-item="{{this._id}}">Add Note</a>
                 {{!-- modal --}}
                 <!-- Modal Structure -->
@@ -129,14 +130,22 @@
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">mode_edit</i>
                                     <textarea id="text-area-{{this._id}}"
-                                        class="text-area materialize-textarea notes-textarea"></textarea>
+                                        class="text-area materialize-textarea notes-textarea"
+                                        data-save-item="{{this._id}}"></textarea>
                                     <label for="text-area-{{this._id}}">Seen at {{this.price}}</label>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer-fixed text-center mt-4">
                                     <a id="submit-note" class="modal-close waves-effect waves-green btn"
                                         data-save-item="{{this._id}}" data-item-price="{{this.price}}">Submit</a>
-                                    <a href="#" class="modal-close waves-effect waves-red btn">Cancel</a>
+                                    <a id="cancel-note" href="#"
+                                        class="modal-close waves-effect waves-red btn">Cancel</a>
 
+                                </div>
+
+                                <div class="container mt-5">
+                                    <hr>
+                                    <div class="notes-header m-4"></div>
+                                    <div id="notes-{{this._id}}" class="notes-results"></div>
                                 </div>
                             </div>
 
@@ -155,19 +164,21 @@
     <div id="saved-swipe" class="col s12">
         {{#each dbDeals}}
         {{#if this.isSaved}}
-        <div id="item-group-${index}" class="row mt-4">
-            <div id="detail-group-${index}" class="col">
+        <div class="row mt-4">
+            <div class="col">
                 <a href="{{this.link}}" class="mb-3">{{this.title}}</a>
                 <p class="mt-4">Price: {{this.price}}</p>
                 <p>Seller: {{this.store}}</p>
                 <p>Popularity: {{this.rating}}</p>
 
                 <a id="{{this._id}}" class="secondary-content removeItem" data-save-item="{{this._id}}">
-                    <i class="medium material-icons lightseagreen-text tooltipped" data-position="top"
+                    <i class="small material-icons trash-color z-depth-1 tooltipped" data-position="top"
                         data-tooltip="Delete">
                         delete
                     </i>
                 </a>
+                <a class="waves-effect waves-light btn-small modal-trigger addNote" href="#note-modal-{{this._id}}"
+                    data-save-item="{{this._id}}">Add Note</a>
             </div>
         </div>
         <hr class="m-4 line">
