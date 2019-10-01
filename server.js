@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const rfs = require('rotating-file-stream');
 const dealsController = require('./controllers/deals.controller.js');
+const noteController = require('./controllers/note.controller.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -39,8 +40,9 @@ app.use(express.static('public'));
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-// deals controller routing
+// controller routing
 app.use(dealsController);
+app.use(noteController);
 
 // start server and listen for client requests
 app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));
