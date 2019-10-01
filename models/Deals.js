@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
-// create schema to store all webscrape deals
+// use mongoose to generate schema
 const Schema = mongoose.Schema;
+
+// create schema for webscrape deals model
 const DealsSchema = new Schema({
 
     title: {
@@ -36,7 +38,8 @@ const DealsSchema = new Schema({
         unique: false
     },
     note: {
-        type: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
+        type: Schema.Types.ObjectId,
+        ref: 'Note'
     }
 });
 

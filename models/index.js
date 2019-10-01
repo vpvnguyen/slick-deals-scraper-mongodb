@@ -1,4 +1,5 @@
 // export default models
 module.exports = {
-    Deals: require("./Deals")
+    Deals: require('./Deals'),
+    Note: require('./Note')
 };
