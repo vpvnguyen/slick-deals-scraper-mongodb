@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const NoteSchema = new Schema({
     price: String,
     comment: String
-});
+}, { timestamps: { createdAt: 'created_at' } });
 
 // create model from schema
 const Note = mongoose.model('Note', NoteSchema);
