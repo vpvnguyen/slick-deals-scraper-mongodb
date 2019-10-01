@@ -49,3 +49,20 @@ body {
 .modal-content {
   padding: 60px;
 }
+
+.modal-footer-fixed {
+  width: 100%;
+  padding: 1rem;
+}
+
+.perfect-grey-color {
+  color: #D3D3D3;
+}
+
+.trash-color {
+  color: #f37373a6;
+}
+
+.darkseagreen-color {
+  color: darkseagreen;
+}
