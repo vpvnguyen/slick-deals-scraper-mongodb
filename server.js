@@ -44,5 +44,11 @@ app.set('view engine', 'handlebars');
 app.use(dealsController);
 app.use(noteController);
 
+// catch all route
+app.get('*', (req, res) => {
+    console.log('redirected');
+    res.redirect('/');
+});
+
 // start server and listen for client requests
 app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));
