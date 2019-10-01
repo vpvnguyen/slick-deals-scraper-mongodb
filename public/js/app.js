@@ -35,6 +35,25 @@ $(document).ready(function () {
         clearDB();
     });
 
+    // clear out all unsaved items from db
+    $(document).on('click', '.addNote', function (event) {
+        event.preventDefault();
+        $('.progress').show();
+    });
+
+    // clear out all unsaved items from db
+    $(document).on('click', '#submit-note', function (event) {
+        event.preventDefault();
+        $('.progress').show();
+
+        const addNoteID = $(this).data('save-item');
+        const notes = $('.text-area').val().trim();
+        const itemPrice = $(this).data('item-price');
+        console.log(addNoteID, notes, itemPrice)
+
+        addNoteToItem(addNoteID, notes, itemPrice);
+    });
+
     // init tap menu
     $('.tap-target').tapTarget();
 });
@@ -83,13 +102,30 @@ function save(saveItem) {
 
 // remove item from favorites
 function unsave(removeItem) {
-    M.toast({ html: `Removing ${removeItem}...` });
+    M.toast({ html: `Removing Item ID:${removeItem}...` });
 
     axios({
         method: 'put',
         url: `/remove/${removeItem}`
     }).then(function (response) {
         location.reload();
+    }).catch(function (err) {
+        if (err) throw err;
+    });
+};
+
+// add note to item
+function addNoteToItem(addNoteID, notes, itemPrice) {
+    M.toast({ html: `Adding a note to item ID:${addNoteID}` });
+
+    axios({
+        method: 'post',
+        url: `/addNote/${addNoteID}`,
+        data: { price: itemPrice, comment: notes }
+    }).then(function (response) {
+        $('.text-area').empty();
+        $('.progress').hide();
+        M.toast({ html: `Notes added!` });
     }).catch(function (err) {
         if (err) throw err;
     });
