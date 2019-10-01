@@ -95,10 +95,5 @@ router.delete('/delete', (req, res) => {
         })
 });
 
-// catch all route
-router.get('*', (req, res) => {
-    res.redirect('/');
-})
-
 // export routes to server.js
 module.exports = router;
