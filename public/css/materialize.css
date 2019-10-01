@@ -5774,7 +5774,9 @@ body.keyboard-focused .dropdown-content li:focus {
 }
 
 .modal .modal-content {
-  padding: 24px;
+  /* fix note text area */
+  /* padding: 24px; */
+  padding: 60px;
 }
 
 .modal .modal-close {

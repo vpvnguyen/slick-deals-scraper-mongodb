@@ -41,3 +41,11 @@ body {
 .help-text {
   font-size: 16px;
 }
+
+#notes-query, .notes-textarea {
+  color: black;
+}
+
+.modal-content {
+  padding: 60px;
+}
